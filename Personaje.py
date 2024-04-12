@@ -1,15 +1,15 @@
 class Personaje:
-    __slots__ = ['__nombre', '__altura', '__peso', 'activo']
+    __slots__ = ['__nombre', '__altura', '__peso', '__activo']
     
     def __init__(self, nombre, altura, peso):
         self.__nombre= nombre
         self.__altura= altura
         self.__peso= peso
-        self.activo= True
+        self.__activo= True
 
 
     def deshabilitar(self):
-        self.activo=False  
+        self.__activo=False  
         
     def getNombre(self):
         return self.__nombre
@@ -33,18 +33,27 @@ class Personaje:
         cad="Personaje[" + self.getNombre() + ", "
         cad+=str(self.__altura) + ", " 
         cad+=str(self.__peso) + ", "
-        cad+=str(self.activo) + "]"
+        cad+=str(self.__activo) + "]"
         return cad
 
+    def habilitar(self):
+        self.__activo=True
+
     def deshabilitar(self):
-        self.activo=False
+        self.__activo=False
 
     def check(self):
-        if(self.activo):
+        if(self.__activo):
             return "activo"
         else:
             return "inactivo"
-        
+    
+    def reset(self):
+        self.setNombre("")
+        self.setAltura(1)
+        self.setPeso(1)
+        self.habilitar()
+
    # def reset(): #Pone el nombre a cadena vacía, peso y altura a valor 1 y activo=True
 
 
@@ -69,7 +78,7 @@ print("s1:",soldado1.toString())
 print("soldado")
 #Principio de ocultación 
 try:
-    soldado1.__altura=-1  #No tiene efecto pero no produce error
+    soldado1.__altura=-1  #No tiene efecto pero no produce error sin slots
 except Exception:
     print("Error. El atributo es privado.")
 
@@ -83,6 +92,11 @@ soldado1.setAltura(4*soldado1.getAltura())
 print("s1:",soldado1.toString())
 soldado1.deshabilitar()
 print("s1:",soldado1.toString())
+
+soldado1.reset()
+print("reset s1:",soldado1.toString())
+# soldado1.__activo=False; Daría error por tratarse de un atributo privado
+print("reset s1:",soldado1.toString())
 
 
 
