@@ -1,11 +1,15 @@
 class Personaje:
-    __slots__ = ['__nombre', '__altura', '__peso']
+    __slots__ = ['__nombre', '__altura', '__peso', 'activo']
     
     def __init__(self, nombre, altura, peso):
         self.__nombre= nombre
         self.__altura= altura
         self.__peso= peso
-        
+        self.activo= True
+
+
+    def deshabilitar(self):
+        self.activo=False  
         
     def getNombre(self):
         return self.__nombre
@@ -28,10 +32,20 @@ class Personaje:
     def toString(self):
         cad="Personaje[" + self.getNombre() + ", "
         cad+=str(self.__altura) + ", " 
-        cad+=str(self.__peso) + "]"
+        cad+=str(self.__peso) + ", "
+        cad+=str(self.activo) + "]"
         return cad
+
+    def deshabilitar(self):
+        self.activo=False
+
+    def check(self):
+        if(self.activo):
+            return "activo"
+        else:
+            return "inactivo"
         
-   # def reset(): #Pone el nombre a cadena vacía y peso y altura a valor 0
+   # def reset(): #Pone el nombre a cadena vacía, peso y altura a valor 1 y activo=True
 
 
 soldado1= Personaje("A", 1.0, 2.0)
@@ -60,10 +74,15 @@ except Exception:
     print("Error. El atributo es privado.")
 
 try:
-    soldado1.altura=-2    #Se permite la incorporación dinámica de atributos in el uso de __slots__
+    soldado1.altura=-2    #Se permite la incorporación dinámica de atributos sin el uso de __slots__
     print(f"s1: {soldado1.altura}")
 except Exception:
     print("Error. El atributo altura no se puede incorporar.")
     
 soldado1.setAltura(4*soldado1.getAltura())
 print("s1:",soldado1.toString())
+soldado1.deshabilitar()
+print("s1:",soldado1.toString())
+
+
+
